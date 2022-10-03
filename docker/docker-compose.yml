@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=mongo-db-cars
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo-volume:/data/db
+    restart: 'no'
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo_express
+    restart: 'no'
+    environment: 
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+      - ME_CONFIG_MONGODB_SERVER=mongo
+    ports:
+      - 8081:8081
+      
+networks:
+  default:
+    name: mongodb_network
